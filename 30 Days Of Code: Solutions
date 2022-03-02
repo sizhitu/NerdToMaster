@@ -1,0 +1,122 @@
+/*******************************************************************************/
+Day 0: Hello, World
+package main
+import ("fmt"
+        "bufio"
+        "os"
+        )
+
+func main() {
+ //Enter your code here. Read input from STDIN. Print output to STDOUT
+    scanner := bufio.NewScanner(os.Stdin)
+    if scanner.Scan(){
+        fmt.Println("Hello, World.\n"+scanner.Text())
+    }
+}
+
+/********************************************************************************/
+Day 1: Data Types
+package main
+
+
+import (
+  "fmt"
+  "os"
+  "bufio"
+  "strconv"
+)
+
+func main() {
+  	var _ = strconv.Itoa // Ignore this comment. You can still use the package "strconv".
+  
+    var i uint64 = 4
+    var d float64 = 4.0
+    var s string = "HackerRank "
+
+    scanner := bufio.NewScanner(os.Stdin)
+    // Declare second integer, double, and String variables.
+    
+    var (
+        secondInt uint32
+		    secondDub float32
+		    secondStr string
+    )
+    // Read and save an integer, double, and String to your variables.
+    fmt.Scan(&secondInt)
+    fmt.Scan(&secondDub)
+    if scanner.Scan() {
+        secondStr = scanner.Text()
+    }
+    // Print the sum of both integer variables on a new line.
+    sum := secondInt + i
+    fmt.Println(sum)
+    // Print the sum of the double variables on a new line.
+    sumDub := secondDub + d
+    fmt.Println(fmt.Sprintf("%.1f",sumDub))
+    // Concatenate and print the String variables on a new line
+    // The 's' variable above should be printed first.
+    fmt.Println(s+secondStr)
+}
+
+/*****************************************************************************/
+Day 2: Operators
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "io"
+    "os"
+    "strconv"
+    "strings"
+)
+
+/*
+ * Complete the 'solve' function below.
+ *
+ * The function accepts following parameters:
+ *  1. DOUBLE meal_cost
+ *  2. INTEGER tip_percent
+ *  3. INTEGER tax_percent
+ */
+
+func solve(meal_cost float64, tip_percent int32, tax_percent int32) {
+    // Write your code here
+    perct := tip_percent+tax_percent
+    val := 1+float64(perct)*1e-2      //保留小数点后2位
+    res := int32((meal_cost*val)+0.5) //对结果四舍五入
+    fmt.Println(res)
+}
+
+func main() {
+    reader := bufio.NewReaderSize(os.Stdin, 16 * 1024 * 1024)
+
+    meal_cost, err := strconv.ParseFloat(strings.TrimSpace(readLine(reader)), 64)
+    checkError(err)
+
+    tip_percentTemp, err := strconv.ParseInt(strings.TrimSpace(readLine(reader)), 10, 64)
+    checkError(err)
+    tip_percent := int32(tip_percentTemp)
+
+    tax_percentTemp, err := strconv.ParseInt(strings.TrimSpace(readLine(reader)), 10, 64)
+    checkError(err)
+    tax_percent := int32(tax_percentTemp)
+
+    solve(meal_cost, tip_percent, tax_percent)
+}
+
+func readLine(reader *bufio.Reader) string {
+    str, _, err := reader.ReadLine()
+    if err == io.EOF {
+        return ""
+    }
+
+    return strings.TrimRight(string(str), "\r\n")
+}
+
+func checkError(err error) {
+    if err != nil {
+        panic(err)
+    }
+}
+
