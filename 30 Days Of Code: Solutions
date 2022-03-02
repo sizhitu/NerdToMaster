@@ -120,3 +120,181 @@ func checkError(err error) {
     }
 }
 
+/***********************************************************************************/
+Day 3: Intro to Conditional Statements
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "io"
+    "os"
+    "strconv"
+    "strings"
+)
+
+
+
+func main() {
+    reader := bufio.NewReaderSize(os.Stdin, 16 * 1024 * 1024)
+
+    NTemp, err := strconv.ParseInt(strings.TrimSpace(readLine(reader)), 10, 64)
+    checkError(err)
+    N := int32(NTemp)
+    switch {
+        case N%2!=0:
+        fmt.Println("Weird")
+        case N%2==0:
+            switch{
+                case N >2 && N <= 5:
+                    fmt.Println("Not Weird")
+                case N >= 6 && N <= 20:
+                    fmt.Println("Weird")
+                case N > 20:
+                    fmt.Println("Not Weird")
+            }
+    }
+}
+
+func readLine(reader *bufio.Reader) string {
+    str, _, err := reader.ReadLine()
+    if err == io.EOF {
+        return ""
+    }
+
+    return strings.TrimRight(string(str), "\r\n")
+}
+
+func checkError(err error) {
+    if err != nil {
+        panic(err)
+    }
+}
+
+/**********************************************************************************/
+Day 4: Class vs. Instance
+package main
+import "fmt"
+
+type person struct {
+	age int
+}
+
+func (p person) NewPerson(initialAge int) person {
+	//Add some more code to run some checks on initialAge
+    if initialAge < 0{
+        p.age = 0
+        fmt.Println("Age is not valid, setting age to 0.")
+    }else{
+        p.age = initialAge
+    }
+	return p
+}
+
+func (p person) amIOld() {
+	//Do some computation in here and print out the correct statement to the console
+    if p.age < 13{
+        fmt.Println("You are young.")
+    }else if p.age < 18 && p.age >= 13{
+        fmt.Println("You are a teenager.")
+    }else if p.age >= 18{
+        fmt.Println("You are old.")
+    }
+}
+
+func (p person) yearPasses() person {
+	//Increment the age of the person in here
+    p.age += 1
+	return p
+}
+
+func main() {
+    var T,age int
+
+    fmt.Scan(&T)
+
+    for i := 0; i < T; i++ {
+        fmt.Scan(&age)
+        p := person{age: age}
+        p = p.NewPerson(age)
+        p.amIOld()
+        for j := 0; j < 3; j++ {
+            p = p.yearPasses()
+        }
+        p.amIOld()
+        fmt.Println()
+    }
+}
+
+/****************************************************************************************/
+Day 5: Loops
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "io"
+    "os"
+    "strconv"
+    "strings"
+)
+
+
+
+func main() {
+    reader := bufio.NewReaderSize(os.Stdin, 16 * 1024 * 1024)
+
+    nTemp, err := strconv.ParseInt(strings.TrimSpace(readLine(reader)), 10, 64)
+    checkError(err)
+    n := int32(nTemp)
+    for i:=1;i<=10;i++{
+        res := n*int32(i)
+        fmt.Printf("%v x %v = %v\n",n,i,res)
+    }
+}
+
+func readLine(reader *bufio.Reader) string {
+    str, _, err := reader.ReadLine()
+    if err == io.EOF {
+        return ""
+    }
+
+    return strings.TrimRight(string(str), "\r\n")
+}
+
+func checkError(err error) {
+    if err != nil {
+        panic(err)
+    }
+}
+
+/***********************************************************************/
+Day 6: Let's Review
+package main
+import "fmt"
+
+func main() {
+ //Enter your code here. Read input from STDIN. Print output to STDOUT
+    var (T int
+         s string
+         res string
+         s1 string
+         s2 string)
+    
+    fmt.Scan(&T)
+    for i := 0;i < T;i++{
+        fmt.Scan(&s)
+        for k,v := range s{
+            if k % 2 == 0{
+                s1 = s1 + string(v)
+            }else{
+                s2 = s2 + string(v)
+            }
+        }
+        res = s1 +" "+ s2
+        fmt.Println(res)
+        s1 = ""
+        s2 = ""
+    }
+    
+}
