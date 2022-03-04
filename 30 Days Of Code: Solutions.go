@@ -349,4 +349,50 @@ func checkError(err error) {
         panic(err)
     }
 }
+/**********************************************************************************************/
+Day 8: Dictionaries and Maps
+package main
+import ("fmt"
+        "bufio"
+        "io"
+        "os"
+        "strings"
+        "strconv")
 
+func main() {
+ //Enter your code here. Read input from STDIN. Print output to STDOUT
+    reader := bufio.NewReaderSize(os.Stdin,1024*1024)
+    nTemp , err := strconv.ParseInt(readLine(reader), 10, 64)
+    n := int(nTemp)
+    checkError(err)
+    res := make(map[string]string)
+    for i := 0; i < n; i++{
+        arr := strings.Split(readLine(reader)," ")
+        res[arr[0]] = arr[1]
+    }
+    for{
+        name := readLine(reader)
+        if name == ""{
+            break
+        }
+        if val,ok := res[name];ok{
+            fmt.Printf("%s=%s\n",name,val)
+        }else{
+            fmt.Println("Not found")
+        }
+    }
+}
+
+func readLine(reader *bufio.Reader) string{
+    str, _, err := reader.ReadLine()
+    if err == io.EOF{
+        return ""
+    }
+    return strings.TrimRight(string(str),"\r\n")
+}
+
+func checkError(err error){
+    if err != nil{
+        panic(err)
+    }
+}
