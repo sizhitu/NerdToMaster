@@ -460,3 +460,54 @@ func checkError(err error) {
     }
 }
 
+/******************************************************************************************/
+Day 10: Binary Numbers
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "io"
+    "os"
+    "strconv"
+    "strings"
+)
+
+
+
+func main() {
+    reader := bufio.NewReaderSize(os.Stdin, 16 * 1024 * 1024)
+
+    nTemp, err := strconv.ParseInt(strings.TrimSpace(readLine(reader)), 10, 64)
+    checkError(err)
+    n := int64(nTemp)
+    baseTwo := string(strconv.FormatInt(n,2))
+    
+    var local, max int
+    for i := range baseTwo{
+        if baseTwo[i] == '1'{
+            local++
+            if local > max{
+                max = local
+            }
+        }else{
+            local = 0
+        }
+    }
+    fmt.Println(max)
+}
+
+func readLine(reader *bufio.Reader) string {
+    str, _, err := reader.ReadLine()
+    if err == io.EOF {
+        return ""
+    }
+
+    return strings.TrimRight(string(str), "\r\n")
+}
+
+func checkError(err error) {
+    if err != nil {
+        panic(err)
+    }
+}
