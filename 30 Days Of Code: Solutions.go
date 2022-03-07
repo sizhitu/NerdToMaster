@@ -511,3 +511,85 @@ func checkError(err error) {
         panic(err)
     }
 }
+
+/*****************************************************************************/
+Day 11: 2D Arrays
+
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "io"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func main() {
+    reader := bufio.NewReaderSize(os.Stdin, 16 * 1024 * 1024)
+
+    var arr [][]int32
+    for i := 0; i < 6; i++ {
+        arrRowTemp := strings.Split(strings.TrimRight(readLine(reader)," \t\r\n"), " ")
+
+        var arrRow []int32
+        for _, arrRowItem := range arrRowTemp {
+            arrItemTemp, err := strconv.ParseInt(arrRowItem, 10, 64)
+            checkError(err)
+            arrItem := int32(arrItemTemp)
+            arrRow = append(arrRow, arrItem)
+        }
+
+        if len(arrRow) != 6 {
+            panic("Bad input")
+        }
+
+        arr = append(arr, arrRow)
+    }
+    fmt.Print(findMaxHourGlasses(arr))
+}
+
+func findMaxHourGlasses(arr [][]int32) int32{
+    var max int32
+    max = -2147483648 //zero value will be the max of negetives
+    for x := 1; x < len(arr)-1; x++{  //outer loop denotes column num, due to hourglass structure, the column only can move len(arr)-2 loops
+        for y := 1; y < len(arr[x])-1; y++{  //inner loop denotes row num
+            var total int32  //tmp value used for sum must in the inner loop to compare with max
+            //up
+            up := arr[y-1][x-1:x+2]
+            for _,element := range up{
+                total += element
+            }
+            //self
+            center := arr[y][x]
+            total += center
+            
+            //bottom
+            bottom := arr[y+1][x-1:x+2]
+            for _,element := range bottom{
+                total += element
+            }
+            if total > max{
+                max = total
+            }
+        }
+    }
+    return max
+}
+
+func readLine(reader *bufio.Reader) string {
+    str, _, err := reader.ReadLine()
+    if err == io.EOF {
+        return ""
+    }
+
+    return strings.TrimRight(string(str), "\r\n")
+}
+
+func checkError(err error) {
+    if err != nil {
+        panic(err)
+    }
+}
+
