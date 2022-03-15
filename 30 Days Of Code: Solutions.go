@@ -728,3 +728,118 @@ for i in range(T):
     data=int(input())
     head=mylist.insert(head,data)    
 mylist.display(head); 	  
+
+/*****************************************************************/
+Day 16: Exceptions - String to Integer
+
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+
+
+S = input().strip()
+
+try: 
+    print (int(S))
+except ValueError: 
+    print ("Bad String")
+
+/********************************************************************/
+Day 17: More Exceptions
+
+#Write your code here
+class Calculator():
+    def power(self, n, p):
+        if  (n < 0) or (p < 0):
+            raise Exception('n and p should be non-negative')
+        return n**p
+
+myCalculator=Calculator()
+T=int(input())
+for i in range(T):
+    n,p = map(int, input().split())
+    try:
+        ans=myCalculator.power(n,p)
+        print(ans)
+    except Exception as e:
+        print(e)   
+
+/***********************************************************************/
+Day 18: Queues and Stacks
+
+import sys
+
+class Solution:
+    # Write your code here
+# Declare two instance variables
+    def __init__(self):
+        self.stack = []
+        self.queue = []
+    
+    # Adds an item to the end of the list
+    def pushCharacter(self, item):
+        self.stack.append(item)
+    
+    # Removes an item from the end of the list
+    def popCharacter(self):
+        return self.stack.pop()
+        
+    # Adds an item to the end of the list
+    def enqueueCharacter(self, item):
+        self.queue.append(item)
+    
+    # Removes an item from the front of the list
+    def dequeueCharacter(self):
+        return self.queue.pop(0)
+# read the string s
+s=input()
+#Create the Solution class object
+obj=Solution()   
+
+l=len(s)
+# push/enqueue all the characters of string s to stack
+for i in range(l):
+    obj.pushCharacter(s[i])
+    obj.enqueueCharacter(s[i])
+    
+isPalindrome=True
+'''
+pop the top character from stack
+dequeue the first character from queue
+compare both the characters
+''' 
+for i in range(l // 2):
+    if obj.popCharacter()!=obj.dequeueCharacter():
+        isPalindrome=False
+        break
+#finally print whether string s is palindrome or not.
+if isPalindrome:
+    print("The word, "+s+", is a palindrome.")
+else:
+    print("The word, "+s+", is not a palindrome.")    
+	       
+/***************************************************************************************************/
+Day 19: Interfaces
+
+class AdvancedArithmetic(object):
+    def divisorSum(n):
+        raise NotImplementedError
+
+class Calculator(AdvancedArithmetic):
+    def divisorSum(self, n):
+        factorslist=[]
+        for i in range(1,n+1):
+            if n%i==0:
+                factorslist.append(i)
+        return sum(factorslist)
+
+n = int(input())
+my_calculator = Calculator()
+s = my_calculator.divisorSum(n)
+print("I implemented: " + type(my_calculator).__bases__[0].__name__)
+print(s)
