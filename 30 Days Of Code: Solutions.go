@@ -843,3 +843,81 @@ my_calculator = Calculator()
 s = my_calculator.divisorSum(n)
 print("I implemented: " + type(my_calculator).__bases__[0].__name__)
 print(s)
+	       
+/******************************************************************************/
+Day 20: Sorting Golang Solution
+
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "io"
+    "os"
+    "strconv"
+    "strings"
+)
+
+func main() {
+    reader := bufio.NewReaderSize(os.Stdin, 16 * 1024 * 1024)
+
+    nTemp, err := strconv.ParseInt(strings.TrimSpace(readLine(reader)), 10, 64)
+    checkError(err)
+    n := int32(nTemp)
+
+    aTemp := strings.Split(strings.TrimSpace(readLine(reader)), " ")
+
+    var a []int32
+
+    for i := 0; i < int(n); i++ {
+        aItemTemp, err := strconv.ParseInt(aTemp[i], 10, 64)
+        checkError(err)
+        aItem := int32(aItemTemp)
+        a = append(a, aItem)
+    }
+    
+    // Write your code here
+    bubbleSort(a)
+}
+func bubbleSort(arr []int32) []int32{
+    n := len(arr)
+    swapCount := 0
+    for i := 0; i < n; i++ {
+        // Track number of elements swapped during a single array traversal
+        numberOfSwaps := 0
+        
+        for j := 0; j < n - 1; j++ {
+            // Swap adjacent elements if they are in decreasing order
+            if arr[j] > arr[j + 1] {
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                numberOfSwaps++
+                swapCount++
+            }
+        }
+        
+        // If no elements were swapped during a traversal, array is sorted
+        if (numberOfSwaps == 0) {
+            break;
+        }
+    }
+    fmt.Printf("Array is sorted in %d swaps. \n",swapCount)
+    fmt.Printf("First Element: %d \n",arr[0])
+    fmt.Printf("Last Element: %d \n",arr[n-1])
+    return arr
+}
+
+func readLine(reader *bufio.Reader) string {
+    str, _, err := reader.ReadLine()
+    if err == io.EOF {
+        return ""
+    }
+
+    return strings.TrimRight(string(str), "\r\n")
+}
+
+func checkError(err error) {
+    if err != nil {
+        panic(err)
+    }
+}
+
