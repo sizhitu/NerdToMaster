@@ -922,7 +922,7 @@ func checkError(err error) {
 }
 
 /******************************************************************/
- Day 21: Generics （）
+ Day 21: Generics （C++ solution, Golang 1.8 version begin to support generics）
                
 #include <iostream>
 #include <vector>
