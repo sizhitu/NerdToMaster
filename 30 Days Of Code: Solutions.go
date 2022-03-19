@@ -1008,3 +1008,75 @@ for i in range(T):
     root=myTree.insert(root,data)
 height=myTree.getHeight(root)
 print(height)       
+
+/***************************************************************************/
+Day 23: BST Level-Order Traversal
+	       
+import sys
+
+class Node:
+    def __init__(self,data):
+        self.right=self.left=None
+        self.data = data
+class Solution:
+    def insert(self,root,data):
+        if root==None:
+            return Node(data)
+        else:
+            if data<=root.data:
+                cur=self.insert(root.left,data)
+                root.left=cur
+            else:
+                cur=self.insert(root.right,data)
+                root.right=cur
+        return root
+
+    def levelOrder(self,root):
+        #Write your code here
+        from collections import deque
+        queue = deque([root])
+        while len(queue):
+            this = queue.popleft()
+            print(this.data, end=" ")
+            if this.left:
+                queue.append(this.left)
+            if this.right:
+                queue.append(this.right)
+T=int(input())
+myTree=Solution()
+root=None
+for i in range(T):
+    data=int(input())
+    root=myTree.insert(root,data)
+myTree.levelOrder(root)
+
+//go solution 
+func levelOrder(root *TreeNode) [][]int {
+    // 通过上一层的长度确定下一层的元素
+    result := make([][]int, 0)
+    if root == nil {
+        return result
+    }
+    queue := make([]*TreeNode, 0)
+    queue = append(queue, root)
+    for len(queue) > 0 {
+        list := make([]int, 0)
+        // 为什么要取length？
+        // 记录当前层有多少元素（遍历当前层，再添加下一层）
+        l := len(queue)
+        for i := 0; i < l; i++ {
+            // 出队列
+            level := queue[0]
+            queue = queue[1:]
+            list = append(list, level.Val)
+            if level.Left != nil {
+                queue = append(queue, level.Left)
+            }
+            if level.Right != nil {
+                queue = append(queue, level.Right)
+            }
+        }
+        result = append(result, list)
+    }
+    return result
+}
