@@ -15,6 +15,10 @@ import (
  *
  * The function is expected to return an INTEGER.
  * The function accepts 2D_INTEGER_ARRAY arr as parameter.
+ * len(arr) for row-x num
+ * len(arr[0]) for col-y num
+ * outer loop for x axis
+ * inner loop for y axis
  */
 
 func hourglassSum(arr [][]int32) int32 {
